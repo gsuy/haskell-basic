@@ -1,0 +1,26 @@
+class IfValue a where
+  boolVal :: a -> Bool
+instance IfValue Int where
+  boolVal 0 = False
+  boolVal _ = True
+instance IfValue Double where
+  boolVal 0 = False
+  boolVal _ = True
+instance IfValue Float where
+  boolVal 0 = False
+  boolVal _ = True
+instance IfValue Bool where
+  boolVal False = False
+  boolVal True = True
+instance IfValue a => IfValue (Maybe a) where
+  boolVal Nothing = False
+  boolVal _ = True
+instance IfValue a => IfValue [a] where
+  boolVal [] = False
+  boolVal _ = True
+
+mapMaybe f x = case x of
+    Just a -> Just $ f a
+    Nothing -> Nothing
+
+mapPairs f (a,b) = (f a, f b)
