@@ -13,17 +13,20 @@
 --     	mconcat xss = [x | xs <- xss, x <- xs]
 
 
-newtype And a = And { getAnd :: a}
+newtype And = And { getAnd :: Bool}
     deriving (Eq, Ord, Read, Show, Bounded)
-instance Bool a => Monoid (And a) where
-    mempty = And True
+instance Semigroup And where
     (And a) <> (And b) = And (a && b)
+instance Monoid And where
+    mempty = And True    
 
-newtype Or a = Or { getOr :: a}
+newtype Or = Or { getOr :: Bool}
     deriving (Eq, Ord, Read, Show, Bounded)
-instance Bool a => Monoid (Or a) where
-    mempty = Or False
+instance Semigroup Or where
     (Or a) <> (Or b) = Or (a || b)
+instance Monoid Or where
+    mempty = Or False
+    
 
 
 maybeBind :: Maybe a -> (a -> Maybe b) -> Maybe b
